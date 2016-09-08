@@ -17,10 +17,9 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = (this.x+1)*dt;
-    if (this.y === player.y && this.x === player.x) { 
-        return; 
-    };
+    this.x = (this.x+1*this.speed);
+    if (this.x > 550) this.x = -100;
+    //console.log(this.x + " " + this.y);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -32,15 +31,15 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function () {
-    this.sprite = 'images/char-horn-girl.png';
-    this.x = 1; 
-    this.y = 1;
+    this.sprite = 'images/enemy-bug.png';
+    this.x = 350; 
+    this.y = 350;
 }
 
 Player.prototype.update = function(x, y, dt) {
     this.x = this.x + x;
     this.y = this.y + y;
-    console.log(this.x + " " + this.y);
+    //console.log(this.x + " " + this.y);
 }
 
 Player.prototype.render = function() {
@@ -50,13 +49,13 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(allowedKeys) {
     console.log(allowedKeys);
     if (allowedKeys === 'up') {
-        Player.prototype.update.call(this, 0, 1)
+        Player.prototype.update.call(this, 0, 90)
     } else if (allowedKeys === 'down') {
-        Player.prototype.update.call(this, 0, -1)
+        Player.prototype.update.call(this, 0, -90)
     } else if (allowedKeys === 'left') {
-        Player.prototype.update.call(this, -1, 0)
+        Player.prototype.update.call(this, -90, 0)
     } else if (allowedKeys === 'right') {
-        Player.prototype.update.call(this, 1, 0)
+        Player.prototype.update.call(this, 90, 0)
     }
 }
 
@@ -67,11 +66,10 @@ Player.prototype.handleInput = function(allowedKeys) {
 // Place the player object in a variable called player
 var player = new Player();
 console.log(player);
-var allEnemies = [
-    new Enemy(1,2,1),
-    new Enemy(2,4,1),
-    new Enemy(2,3,2)
-];
+var e1 = new Enemy(-100,50,2);
+var e2 = new Enemy(-100,140,3)
+var e3 = new Enemy(-100,230,1)
+var allEnemies = [e1, e2, e3];
 
 
 // This listens for key presses and sends the keys to your
