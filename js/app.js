@@ -32,14 +32,17 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function () {
     this.sprite = 'images/enemy-bug.png';
-    this.x = 350; 
-    this.y = 350;
+    this.x = 200; 
+    this.y = 400;
 }
 
-Player.prototype.update = function(x, y, dt) {
-    this.x = this.x + x;
-    this.y = this.y + y;
-    //console.log(this.x + " " + this.y);
+Player.prototype.update = function(x, y) {
+    if ( x != undefined) {
+        this.x = this.x + x;
+    }
+    if ( y != undefined) {
+        this.y = this.y + y;
+    }
 }
 
 Player.prototype.render = function() {
@@ -49,13 +52,15 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(allowedKeys) {
     console.log(allowedKeys);
     if (allowedKeys === 'up') {
-        Player.prototype.update.call(this, 0, 90)
+        Player.prototype.update.call(this, 0, -85);
     } else if (allowedKeys === 'down') {
-        Player.prototype.update.call(this, 0, -90)
+        Player.prototype.update.call(this, 0, 85);
     } else if (allowedKeys === 'left') {
-        Player.prototype.update.call(this, -90, 0)
+        Player.prototype.update.call(this, -100, 0);
     } else if (allowedKeys === 'right') {
-        Player.prototype.update.call(this, 90, 0)
+        Player.prototype.update.call(this, 100, 0);
+    } else {
+        Player.prototype.update.call(this, 0, 0);
     }
 }
 
@@ -66,8 +71,8 @@ Player.prototype.handleInput = function(allowedKeys) {
 // Place the player object in a variable called player
 var player = new Player();
 console.log(player);
-var e1 = new Enemy(-100,50,2);
-var e2 = new Enemy(-100,140,3)
+var e1 = new Enemy(-100,60,2);
+var e2 = new Enemy(-100,145,3)
 var e3 = new Enemy(-100,230,1)
 var allEnemies = [e1, e2, e3];
 
