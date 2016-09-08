@@ -19,7 +19,12 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x = (this.x+1*this.speed);
     if (this.x > 550) this.x = -100;
-    //console.log(this.x + " " + this.y);
+    
+    if ((this.x > player.x -80 && this.x < player.x + 80) && this.y === player.y) {
+        player.x = 200;
+        player.y = 400;
+    }
+
 };
 
 // Draw the enemy on the screen, required method for game
