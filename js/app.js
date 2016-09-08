@@ -64,7 +64,17 @@ Player.prototype.update = function(x, y) {
             Player.prototype.reset(this);
         }
     }
+
+    if (this.x === gem.x && this.y === gem.y) {
+        gem.hideGem();  
+        Player.prototype.adjustScore(50);
+        console.log("score = " + score);
+    }
 }
+
+Player.prototype.adjustScore = function(adjustBy) {
+    score += adjustBy;
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -97,9 +107,7 @@ var Gem = function(x, y) {
 Gem.prototype.update = function() {
     this.counter++;
     if (this.counter > 50) {
-        this.x = -100;
-        this.y = -100;
-        this.counter = -100;
+        gem.hideGem();    
     }
     if (this.counter === 0) {
         this.x = Gem.prototype.randomX();
@@ -107,11 +115,16 @@ Gem.prototype.update = function() {
     }
 };
 
+Gem.prototype.hideGem = function() {
+    this.x = -100;
+    this.y = -100;
+    this.counter = -100;
+}
+
 Gem.prototype.randomX = function() {
     var array = [0,100,200,300,400]
     var rand = Math.random()*4;
     rand = Math.floor(rand);
-    console.log(rand);
     return array[rand];
 };
 
@@ -119,7 +132,6 @@ Gem.prototype.randomY = function() {
     var array = [60,145,230,315];
     var rand = Math.random()*3;
     rand = Math.floor(rand);
-    console.log(rand);
     return array[rand];
 };
 
@@ -131,6 +143,7 @@ Gem.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player();
+var score = 0;
 var gem = new Gem();
 var e1 = new Enemy(-100,60,2);
 var e2 = new Enemy(-100,145,6)
