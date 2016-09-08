@@ -21,7 +21,8 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 550) this.x = -100;
     
     if ((this.x > player.x - 60 && this.x < player.x + 80) && this.y === player.y) {
-        Player.prototype.reset(player);
+        Player.prototype.reset(player)
+        Player.prototype.adjustScore(-100);
     }
 
 };
@@ -62,18 +63,19 @@ Player.prototype.update = function(x, y) {
         }
         if (this.y < -25) {
             Player.prototype.reset(this);
+            Player.prototype.adjustScore(10)
         }
     }
 
     if (this.x === gem.x && this.y === gem.y) {
         gem.hideGem();  
         Player.prototype.adjustScore(50);
-        console.log("score = " + score);
     }
 }
 
 Player.prototype.adjustScore = function(adjustBy) {
     score += adjustBy;
+    console.log("score = " + score);
 };
 
 Player.prototype.render = function() {
@@ -98,15 +100,15 @@ Player.prototype.handleInput = function(allowedKeys) {
 // create Gem class for collectible gems for more cash
 var Gem = function(x, y) {
     this.sprite = 'images/Gem Blue.png'
-    this.x = 200;
-    this.y = 100;
+    this.x = Gem.prototype.randomX();
+    this.y = Gem.prototype.randomY();
     this.counter = 0;
     this.cashValue = 0;
 };
 
 Gem.prototype.update = function() {
     this.counter++;
-    if (this.counter > 50) {
+    if (this.counter > 200) {
         gem.hideGem();    
     }
     if (this.counter === 0) {
@@ -146,7 +148,7 @@ var player = new Player();
 var score = 0;
 var gem = new Gem();
 var e1 = new Enemy(-100,60,2);
-var e2 = new Enemy(-100,145,6)
+var e2 = new Enemy(-100,145,5)
 var e3 = new Enemy(-100,230,3)
 var e4 = new Enemy(-100,60,4);
 var allEnemies = [e1, e2, e3, e4];
