@@ -21,8 +21,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 550) this.x = -100;
     
     if ((this.x > player.x -80 && this.x < player.x + 80) && this.y === player.y) {
-        player.x = 200;
-        player.y = 400;
+        Player.prototype.reset(player);
     }
 
 };
@@ -41,12 +40,29 @@ var Player = function () {
     this.y = 400;
 }
 
+Player.prototype.reset = function(character) {
+    character.x = 200;
+    character.y = 400;
+}
+
 Player.prototype.update = function(x, y) {
     if ( x != undefined) {
         this.x = this.x + x;
+        if (this.x < 0) { //sets left limit
+            this.x = 0;
+        }
+        if (this.x > 400) { //sets right limit
+            this.x = 400;
+        }
     }
     if ( y != undefined) {
         this.y = this.y + y;
+        if (this.y > 400 ) {
+            this.y = 400;
+        }
+        if (this.y < -25) {
+            Player.prototype.reset(this);
+        }
     }
 }
 
