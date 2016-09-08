@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     this.x = (this.x+1*this.speed);
     if (this.x > 550) this.x = -100;
     
-    if ((this.x > player.x -80 && this.x < player.x + 80) && this.y === player.y) {
+    if ((this.x > player.x - 60 && this.x < player.x + 80) && this.y === player.y) {
         Player.prototype.reset(player);
     }
 
@@ -71,7 +71,6 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(allowedKeys) {
-    console.log(allowedKeys);
     if (allowedKeys === 'up') {
         Player.prototype.update.call(this, 0, -85);
     } else if (allowedKeys === 'down') {
@@ -83,19 +82,61 @@ Player.prototype.handleInput = function(allowedKeys) {
     } else {
         Player.prototype.update.call(this, 0, 0);
     }
-}
+};
 
 
+// create Gem class for collectible gems for more cash
+var Gem = function(x, y) {
+    this.sprite = 'images/Gem Blue.png'
+    this.x = 200;
+    this.y = 100;
+    this.counter = 0;
+    this.cashValue = 0;
+};
+
+Gem.prototype.update = function() {
+    this.counter++;
+    if (this.counter > 50) {
+        this.x = -100;
+        this.y = -100;
+        this.counter = -100;
+    }
+    if (this.counter === 0) {
+        this.x = Gem.prototype.randomX();
+        this.y = Gem.prototype.randomY();
+    }
+};
+
+Gem.prototype.randomX = function() {
+    var array = [0,100,200,300,400]
+    var rand = Math.random()*4;
+    rand = Math.floor(rand);
+    console.log(rand);
+    return array[rand];
+};
+
+Gem.prototype.randomY = function() {
+    var array = [60,145,230,315];
+    var rand = Math.random()*3;
+    rand = Math.floor(rand);
+    console.log(rand);
+    return array[rand];
+};
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player();
-console.log(player);
+var gem = new Gem();
 var e1 = new Enemy(-100,60,2);
-var e2 = new Enemy(-100,145,3)
-var e3 = new Enemy(-100,230,1)
-var allEnemies = [e1, e2, e3];
+var e2 = new Enemy(-100,145,6)
+var e3 = new Enemy(-100,230,3)
+var e4 = new Enemy(-100,60,4);
+var allEnemies = [e1, e2, e3, e4];
 
 
 // This listens for key presses and sends the keys to your
